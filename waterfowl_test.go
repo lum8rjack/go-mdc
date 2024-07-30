@@ -59,3 +59,36 @@ func TestCheckYear(t *testing.T) {
 		})
 	}
 }
+
+// TestZipCodes
+func TestZipCodes(t *testing.T) {
+	for _, a := range Areas {
+		t.Run(a.Name, func(t *testing.T) {
+			if a.Zipcode <= 63000 || a.Zipcode >= 66000 {
+				t.Errorf("Invalid zip code %d for %s\n", a.Zipcode, a.Name)
+			}
+		})
+	}
+}
+
+// TestLatitude
+func TestLatitude(t *testing.T) {
+	for _, a := range Areas {
+		t.Run(a.Name, func(t *testing.T) {
+			if a.Latitude < 36.0 || a.Latitude > 41.0 {
+				t.Errorf("Invalid latitude %f for %s\n", a.Latitude, a.Name)
+			}
+		})
+	}
+}
+
+// TestLongitude
+func TestLongitude(t *testing.T) {
+	for _, a := range Areas {
+		t.Run(a.Name, func(t *testing.T) {
+			if a.Longitude < -96.0 || a.Longitude > -88.0 {
+				t.Errorf("Invalid longitude %f for %s\n", a.Longitude, a.Name)
+			}
+		})
+	}
+}

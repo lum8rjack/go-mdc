@@ -13,29 +13,16 @@ import (
 )
 
 type Area struct {
-	Key  string
-	Name string
+	Key       string
+	Name      string
+	Zipcode   int
+	City      string
+	Longitude float32
+	Latitude  float32
+	URL       string
 }
 
-var Areas = [15]Area{
-	{Name: "B.K. Leach", Key: "8514"},
-	{Name: "Ten Mile Pond", Key: "8241"},
-	{Name: "Otter Slough", Key: "5004"},
-	{Name: "Schell-Osage", Key: "5701"},
-	{Name: "Four Rivers", Key: "8238"},
-	{Name: "Montrose", Key: "5604"},
-	{Name: "Duck Creek", Key: "5001"},
-	{Name: "Columbia Bottoms", Key: "9736"},
-	{Name: "Marais Temps Clair", Key: "7902"},
-	{Name: "Ted Shanks", Key: "7011"},
-	{Name: "Eagle Bluffs", Key: "8931"},
-	{Name: "Grand Pass", Key: "8010"},
-	{Name: "Fountain Grove", Key: "4601"},
-	{Name: "Bob Brown", Key: "8142"},
-	{Name: "Nodaway Valley", Key: "9134"},
-}
-
-// Get waterfowl area by ney
+// Get waterfowl area by key
 func GetAreaByKey(key string) (Area, error) {
 	a := Area{}
 	for _, area := range Areas {
@@ -56,17 +43,6 @@ func GetAreaByName(name string) (Area, error) {
 	}
 	return a, errors.New("area not found")
 }
-
-const (
-	HarvestDataMinYear int    = 2016
-	HarvestDataUrl     string = "https://extra.mdc.mo.gov/widgets/wtrfwl_harvest/dataJSONservice.php"
-	HarvestDataOrigin  string = "https://extra.mdc.mo.gov"
-	HarvestDataReferer string = "https://extra.mdc.mo.gov/widgets/wtrfwl_harvest/"
-)
-
-var (
-	HarvestDataUserAgent string = "go-mdc"
-)
 
 type HarvestData struct {
 	WfHrvUpdatesRecs []HarvestDay `json:"wfHrv_Updates_Recs"`
@@ -130,7 +106,7 @@ func CheckYear(year int) (string, error) {
 	return fmt.Sprintf("%d-%d", year, year+1), nil
 }
 
-// Send web reques to get harvest data for the provided year
+// Send web request to get harvest data for the provided year
 // If you want the 2022-2023 season, the year should be 2022
 func GetData(year int, area Area) (HarvestData, error) {
 	// Setup empty harvest data to start
