@@ -98,7 +98,7 @@ func CheckYear(year int) (string, error) {
 	}
 
 	currentmonth := int(time.Now().Month())
-	if currentmonth < 11 && currentyear == year {
+	if currentmonth < 9 && currentyear == year {
 		return "", errors.New("invalid year - season hasn't started")
 	}
 
